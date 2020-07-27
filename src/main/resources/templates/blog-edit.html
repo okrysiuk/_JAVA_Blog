@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Редактирование заметки</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5 mb-5">
+    <h2>Редактировать заметку:</h2>
+    <div th:each="note : ${detail}">
+        <form method="post">
+            <input type="text" th:value="${note.getAuthor()}" name="author" placeholder="Автор:" class="form-control"><br>
+            <input type="text" th:value="${note.getTitle()}" name="title" placeholder="Введите название заметки:" class="form-control"><br>
+            <textarea name="text" placeholder="Текст заметки..." class="form-control" th:text="${note.getText()}"/><br>
+            <input type="text" th:value="${note.getTag()}" name="tag" placeholder="Тэги:" class="form-control"><br>
+            <button type="submit" class="btn btn-success">Обновить заметку</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -43,10 +43,54 @@ public class MainController {
     }
     @GetMapping("/note/{id}")
     public String noteDetails(@PathVariable(value = "id")long noteId, Model model) {
+        if(!noteRepo.existsById(noteId)){
+            return "redirect:/";
+        }
+
         Optional<Note> note = noteRepo.findById(noteId);
         ArrayList<Note> res = new ArrayList<>();
         note.ifPresent(res::add);
         model.addAttribute("detail",res);
         return "blog-details";
+    }
+    @GetMapping("/note/{id}/edit")
+    public String noteEdit(@PathVariable(value = "id")long noteId, Model model) {
+        if(!noteRepo.existsById(noteId)){
+            return "redirect:/";
+        }
+
+        Optional<Note> note = noteRepo.findById(noteId);
+        ArrayList<Note> res = new ArrayList<>();
+        note.ifPresent(res::add);
+        model.addAttribute("detail",res);
+        return "blog-edit";
+    }
+
+    @PostMapping("/note/{id}/edit")
+    public String updating(@PathVariable(value = "id")long noteId,
+                           @RequestParam(required = false) String author,
+                           @RequestParam(required = false) String title,
+                           @RequestParam(required = false) String text,
+                           @RequestParam(required = false) String tag, Model model) {
+        Note note = noteRepo.findById(noteId).orElseThrow(() ->
+                new IllegalArgumentException("Unsupported value: " + noteId) // just return it
+        );
+        note.setAuthor(author);
+        note.setTitle(title);
+        note.setText(text);
+        note.setTag(tag);
+
+        noteRepo.save(note);
+
+        return "redirect:/";
+    }
+    @PostMapping("/note/{id}/remove")
+    public String removing(@PathVariable(value = "id")long noteId, Model model) {
+        Note note = noteRepo.findById(noteId).orElseThrow(() ->
+                new IllegalArgumentException("Unsupported value: " + noteId) // just return it
+        );
+        noteRepo.delete(note);
+
+        return "redirect:/";
     }
 }
