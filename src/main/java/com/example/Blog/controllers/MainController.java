@@ -21,6 +21,10 @@ public class MainController {
     private NoteRepo noteRepo;
 
     @GetMapping("/")
+    public String greeting() {
+        return "greeting";
+    }
+    @GetMapping("/home")
     public String home(Model model) {
         Iterable<Note> notes = noteRepo.findAll();
         model.addAttribute("notes", notes);
