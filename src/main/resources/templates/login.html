@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+style="height: 100%">
 <head>
     <title>Spring Security Example </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
-<body>
-<div th:if="${param.error}">
-    Invalid username and password.
+<body style="height: 100%">
+<div class="container-fluid h-100">
+    <div class="row justify-content-center align-items-center h-100" style="text-align: center">
+        <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <input class="form-control form-control-lg" placeholder="User name" type="text" name="username"/>
+                </div>
+                <div class="form-group">
+                    <input class="form-control form-control-lg" placeholder="Password" type="password" name="password"/>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
+
+                </div>
+            </form>
+            <p class="mt-5 mb-3 text-muted">© 2019-2020</p>
+            <div style="min-height: 40px">
+                <div id="message-error" style="color: #C82333" th:if="${param.error}">Invalid username or password.</div>
+                <div id="message-logout" style="color: #E0A800" th:if="${param.logout}">You have been logged out.</div>
+            </div>
+        </div>
+    </div>
 </div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
 </body>
+    <script>
+        setTimeout(function(){document.getElementById('message-error').style.display = 'none';}, 5000);
+        setTimeout(function(){document.getElementById('message-logout').style.display = 'none';}, 5000);
+    </script>
 </html>
+
