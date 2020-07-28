@@ -41,7 +41,11 @@ public class MainController {
                            @RequestParam(required = false) String title,
                            @RequestParam(required = false) String text,
                            @RequestParam(required = false) String tag, Model model){
-        Note note = new Note(author, title, text, tag);
+        Note note = new Note();
+        note.setAuthor(author);
+        note.setTitle(title);
+        note.setText(text);
+        note.setTag(tag);
         noteRepo.save(note);
         return "redirect:/";
     }
